@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fitness Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: #333;
+            color: white;
+            padding: 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .portal {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portal:hover {
+            transform: scale(1.05);
+        }
+
+        .portal h2 {
+            margin-bottom: 10px;
+        }
+
+        /* Image Styling */
+        .portal img {
+            width: 80%;  /* Adjusted width */
+            height: auto;
+            max-height: 100px; /* Prevent blurriness */
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #00c9ff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links img {
+            width: 25px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AI Fitness Trainer</h1>
+        <p>Your AI-powered fitness assistant</p>
+    </header>
+
+    <section class="grid-container">
+        <div class="portal" onclick="location.href='workout_planner.html'">
+        <a href="/workout_planner">
+            <div class="card">
+                <h3> workout_planner
+                    <img src="https://public-files.gumroad.com/variants/vbt5aoyxc6mfv8amn7o6hybtny4v/3298c3eb001bbed90f1d616da66708480096a0a1b6e81bd4f8a2d6e9b831d301" alt=" workout_planner">
+                </h3>
+
+            </div>
+        </a>   
+        </div>
+
+        <div class="portal" onclick="location.href='calories.html'">
+            <a href="/calories">
+                <div class="card">
+                    <h3>Calories Tracker</h3>
+                    <img src="image/img2.jpg" alt="Calories Tracker">
+                </div>
+            </a>
+               </div>
+
+        <div class="portal" onclick="location.href='chatbot.html'">
+            <a href="/chatbot">
+                <div class="card">
+                    <h3>Chatbot</h3>
+                    <img src="image/img1.jpg" alt="Chatbot">
+                </div>
+            </a>
+            
+        </div>
+
+        <div class="portal" onclick="location.href='index.html'">
+    
+            <a href="/surveillance">
+                <div class="card">
+                    <h3>AI Surveillance Tracker</h3>
+                    <img src="https://i.pinimg.com/originals/7d/d2/11/7dd211cbb0a752a92e770f65af2d9fff.jpg" alt="Surveillance Icon">
+                </div>
+            </a>
+            
+
+
+            <!-- <h2>AI Surveillance Tracker</h2>
+    <img src="https://i.pinimg.com/originals/7d/d2/11/7dd211cbb0a752a92e770f65af2d9fff.jpg" alt="AI Surveillance Tracker"> -->
+
+</div>
+    </section>
+
+    <footer>
+        <p>© 2025 AI Fitness Tracker. All Rights Reserved.</p>
+        <p>Designed with ❤ for a Healthier You!</p>
+        <p>
+            <a href="privacy.html">Privacy Policy</a> | 
+            <a href="terms.html">Terms of Service</a> | 
+            <a href="contact.html">Contact Us</a>
+        </p>
+        <div class="social-links">
+            <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+            <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
+            <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("workout-form");
+            const workoutList = document.getElementById("workout-list");
+            let workouts = JSON.parse(localStorage.getItem("workouts")) || [];
+
+            function renderWorkouts() {
+                workoutList.innerHTML = "";
+                workouts.forEach((workout, index) => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<strong>${workout.name}</strong><br>${workout.notes}
+                        <button class="delete-btn" onclick="deleteWorkout(${index})">X</button>`;
+                    workoutList.appendChild(li);
+                });
+            }
+
+            window.deleteWorkout = function (index) {
+                workouts.splice(index, 1);
+                localStorage.setItem("workouts", JSON.stringify(workouts));
+                renderWorkouts();
+            };
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const name = document.getElementById("workout-name").value;
+                const notes = document.getElementById("workout-notes").value;
+                const workout = { name, notes };
+                workouts.push(workout);
+                localStorage.setItem("workouts", JSON.stringify(workouts));
+                renderWorkouts();
+                form.reset();
+            });
+
+            renderWorkouts();
+        });
+
+        alert("Welcome! Your fitness goal is: Stay Healthy!");
+    </script>
+</body>
+</html>

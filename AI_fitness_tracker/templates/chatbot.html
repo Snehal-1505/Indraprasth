@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Chatbot</title>
+    <link rel="stylesheet" href="chatbot.css">
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #60b7cd; /* Fallback color */
+    background-image: url('image.png'); /* Path to your background image */
+    background-size: cover;
+}
+
+/* Make the entire chatbot bigger */
+.chat-container {
+    width: 450px; /* Increased width */
+    height: 400px; /* Increased height */
+    background-color: #f0f0f0;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 2); /* Stronger shadow */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Prevent content from overflowing */
+}
+
+/* Chat box area */
+#chat-box {
+    flex: 1; /* Takes up remaining space */
+    color: #0c6176;
+    padding: 20px; /* Increased padding */
+    overflow-y: auto; /* Scrollable chat */
+    /*border-bottom: 2px solid #f0f0f0;  Thicker border */
+    font-size: 18px; /* Bigger font size */
+}
+
+/* Input area */
+.input-area {
+    display: flex;
+    justify-content: center; /* Center the button */
+    align-items: center; /* Vertically center */
+    padding: 1px; /* Increased padding */
+    background-color: #f0f0f0; /* Light background */
+    border-top: 2px solid #f0f0f0; /* Thicker border */
+}
+
+/* Input field */
+#user-input {
+    /*flex: 1;  Takes up remaining space */
+    padding: 12px; /* Increased padding */
+    border: 2px solid #9dd7ec; /* Thicker border */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 16px; /* Bigger font size */
+    background-color: #f0f0f0; /* Light gray background */
+   
+    /*margin-right: 10px;  Space between input and button */
+}
+
+/* Send button */
+#send-btn {
+    padding: 12px 24px; /* Increased padding */
+    border: none;
+    background-color: #2f6dd0; /* Green color */
+    color: #9dd7ec;
+    border-radius: 8px; /* Rounded corners */
+    font-size: 16px; /* Bigger font size */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for button */
+#send-btn:hover {
+    background-color: #2f6dd0; /* Darker green */
+}
+</style>
+</head>
+<body>
+    <div class="chat-container">
+        <div id="chat-box"></div>
+        <input type="text" id="user-input" placeholder="Ask me about fitness...">
+        <button id="send-btn">Send</button>
+    </div>
+   <script>
+   document.getElementById("send-btn").addEventListener("click", sendMessage);
+document.getElementById("user-input").addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+        e.preventDefault(); // Prevent form submission
+        sendMessage();
+    }
+});
+
+function sendMessage() {
+    const userInput = document.getElementById("user-input");
+    const chatBox = document.getElementById("chat-box");
+
+    if (userInput.value.trim() === "") return;
+
+    // Display user message
+    chatBox.innerHTML += `<div class="user-message">You: ${userInput.value}</div>`;
+
+    // Send message to backend
+    fetch("http://127.0.0.1:5000/chatbot", {  // Ensure the correct Flask route
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userInput.value }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            // Display bot response
+            chatBox.innerHTML += `<div class="bot-message">Bot: ${data.response}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            chatBox.innerHTML += `<div class="bot-message error">Error: Unable to connect</div>`;
+        });
+
+    // Clear input
+    userInput.value = "";
+}
+
+   </script>
+</body>
+</html>
