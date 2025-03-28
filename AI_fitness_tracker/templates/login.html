@@ -1,18 +1,121 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #6C63FF, #48C6EF);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    width: 350px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    animation: fadeIn 1s ease;
+}
+
+h2,h1 {
+    margin-bottom: 25px;
+    color: #6C63FF;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input[type="text"], input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #6C63FF;
+    box-shadow: 0 0 5px rgba(108, 99, 255, 0.5);
+}
+
+button {
+    padding: 12px;
+    background: #6C63FF;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #574B90;
+}
+
+.register-link {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.register-link a {
+    color: #6C63FF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+    </style>
 </head>
 <body>
-    <h2>Login</h2>
-    <form method="POST">
-        <label for="username">Username:</label>
-        <input type="text" name="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" required><br>
-        <button type="submit">Login</button>
-    </form>
-    <a href="{{ url_for('register') }}">Don't have an account? Register here</a>
+    <div class="login-container">
+        
+        <h2> Welcome <br>to <br>AI Workout Trainer </h2>
+        <form method="POST">
+            <label for="username">Username</label>
+            <input type="text" name="username" placeholder="Enter your username" required>
+
+            <label for="password">Password</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit">🔥 Login Now</button>
+        </form>
+        <div class="register-link">
+            <p>Not a member yet? <a href="{{ url_for('register') }}">Register here</a></p>
+        </div>
+    </div>
 </body>
 </html>
